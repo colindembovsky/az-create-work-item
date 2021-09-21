@@ -1,8 +1,8 @@
 {
-  "name": "typescript-action",
+  "name": "create-azdo-work-item",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript template action",
+  "description": "Create a Work Item in Azure DevOps",
   "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
@@ -10,11 +10,11 @@
     "format-check": "prettier --check **/*.ts",
     "lint": "eslint src/**/*.ts",
     "package": "ncc build --source-map --license licenses.txt",
-    "all": "npm run build && npm run format && npm run lint && npm run package && npm test"
+    "all": "yarn run build && yarn run format && yarn run lint && yarn run package"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/colindembovsky/az-create-work-item.git"
   },
   "keywords": [
     "actions",
@@ -33,6 +33,7 @@
     "@vercel/ncc": "^0.29.0",
     "eslint": "^7.31.0",
     "eslint-plugin-github": "^4.1.1",
+    "eslint-plugin-prettier": "^4.0.0",
     "js-yaml": "^4.1.0",
     "prettier": "2.2.1",
     "typescript": "^4.1.3"
