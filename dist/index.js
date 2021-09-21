@@ -49,14 +49,14 @@ function run() {
             const description = core.getInput('description');
             const areaPath = core.getInput('areaPath');
             const iterationPath = core.getInput('iterationPath');
-            core.info(`orgName: ${orgName}`);
-            core.info(`project: ${project}`);
-            core.info(`type: ${type}`);
-            core.info(`title: ${title}`);
-            core.info(`description: ${description}`);
-            core.info(`areaPath: ${areaPath}`);
-            core.info(`iterationPath: ${iterationPath}`);
-            core.info('Creating new work item...');
+            core.debug(`orgName: ${orgName}`);
+            core.debug(`project: ${project}`);
+            core.debug(`type: ${type}`);
+            core.debug(`title: ${title}`);
+            core.debug(`description: ${description}`);
+            core.debug(`areaPath: ${areaPath}`);
+            core.debug(`iterationPath: ${iterationPath}`);
+            core.debug('Creating new work item...');
             const newId = yield (0, work_item_functions_1.createWorkItem)(token, orgName, project, {
                 type,
                 title,
@@ -116,9 +116,9 @@ const azdev = __importStar(__nccwpck_require__(7967));
 const core = __importStar(__nccwpck_require__(2186));
 function createWorkItem(token, orgName, project, workItemInfo) {
     return __awaiter(this, void 0, void 0, function* () {
-        core.info('Try get work item client');
+        core.debug('Try get work item client');
         const wiClient = yield getWiClient(token, orgName);
-        core.info('Got work item client');
+        core.debug('Got work item client');
         const patchDoc = [
             { op: 'add', path: '/fields/System.Title', value: workItemInfo.title },
             {
@@ -141,8 +141,8 @@ function createWorkItem(token, orgName, project, workItemInfo) {
                 value: workItemInfo.iterationPath
             });
         }
-        core.info('Calling create work item...');
-        const workItem = yield wiClient.createWorkItem(null, patchDoc, workItemInfo.type, project);
+        core.debug('Calling create work item...');
+        const workItem = yield wiClient.createWorkItem(null, patchDoc, project, workItemInfo.type);
         if ((workItem === null || workItem === void 0 ? void 0 : workItem.id) === undefined) {
             throw new Error('Work item was not created');
         }
@@ -153,10 +153,10 @@ exports.createWorkItem = createWorkItem;
 function getWiClient(token, orgName) {
     return __awaiter(this, void 0, void 0, function* () {
         const orgUrl = `https://dev.azure.com/${orgName}`;
-        core.info(`Connecting to ${orgUrl}`);
+        core.debug(`Connecting to ${orgUrl}`);
         const authHandler = azdev.getPersonalAccessTokenHandler(token);
         const connection = new azdev.WebApi(orgUrl, authHandler);
-        core.info('Connection successful!');
+        core.info(`Connected successfully to ${orgUrl}!`);
         return connection.getWorkItemTrackingApi();
     });
 }

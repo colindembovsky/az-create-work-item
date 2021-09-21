@@ -12,15 +12,15 @@ async function run(): Promise<void> {
     const areaPath: string = core.getInput('areaPath');
     const iterationPath: string = core.getInput('iterationPath');
 
-    core.info(`orgName: ${orgName}`);
-    core.info(`project: ${project}`);
-    core.info(`type: ${type}`);
-    core.info(`title: ${title}`);
-    core.info(`description: ${description}`);
-    core.info(`areaPath: ${areaPath}`);
-    core.info(`iterationPath: ${iterationPath}`);
+    core.debug(`orgName: ${orgName}`);
+    core.debug(`project: ${project}`);
+    core.debug(`type: ${type}`);
+    core.debug(`title: ${title}`);
+    core.debug(`description: ${description}`);
+    core.debug(`areaPath: ${areaPath}`);
+    core.debug(`iterationPath: ${iterationPath}`);
 
-    core.info('Creating new work item...');
+    core.debug('Creating new work item...');
     const newId = await createWorkItem(token, orgName, project, {
       type,
       title,

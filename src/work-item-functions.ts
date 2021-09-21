@@ -17,9 +17,9 @@ export async function createWorkItem(
   project: string,
   workItemInfo: IWorkItemInfo
 ): Promise<number> {
-  core.info('Try get work item client');
+  core.debug('Try get work item client');
   const wiClient = await getWiClient(token, orgName);
-  core.info('Got work item client');
+  core.debug('Got work item client');
 
   const patchDoc = [
     {op: 'add', path: '/fields/System.Title', value: workItemInfo.title},
@@ -45,12 +45,12 @@ export async function createWorkItem(
     });
   }
 
-  core.info('Calling create work item...');
+  core.debug('Calling create work item...');
   const workItem = await wiClient.createWorkItem(
     null,
     patchDoc,
-    workItemInfo.type,
-    project
+    project,
+    workItemInfo.type
   );
 
   if (workItem?.id === undefined) {
@@ -65,9 +65,10 @@ async function getWiClient(
   orgName: string
 ): Promise<IWorkItemTrackingApi> {
   const orgUrl = `https://dev.azure.com/${orgName}`;
-  core.info(`Connecting to ${orgUrl}`);
+  core.debug(`Connecting to ${orgUrl}`);
   const authHandler = azdev.getPersonalAccessTokenHandler(token);
   const connection = new azdev.WebApi(orgUrl, authHandler);
-  core.info('Connection successful!');
+
+  core.info(`Connected successfully to ${orgUrl}!`);
   return connection.getWorkItemTrackingApi();
 }
