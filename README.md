@@ -8,7 +8,7 @@
 
 See [action.yml](action.yml)
 
-**Basic:**
+**Create a Work Item in Azure DevOps:**
 ```yaml
 steps:
 - uses: colindembovsky/az-create-work-item@v1.0.0
