@@ -4,7 +4,7 @@ author: 'colindembovsky'
 inputs:
   token:
     required: true
-    description: 'Azure DevOps Token - must have WorkItem write permissions'
+    description: 'Azure DevOps Token - must have "WorkItems (Read and Write)" permission'
   orgName:
     required: true
     description: 'Name of the Azure DevOps organization - e.g. colinsalmcorner for dev.azure.com/colinsalmcorner'
