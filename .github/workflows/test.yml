@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          token: ${{ secrets.AZDO_PAT }}
+          token: ${{ secrets.AZDO_TOKEN }}
           orgName: colinsalmcorner
           project: Actions
           type: User Story
