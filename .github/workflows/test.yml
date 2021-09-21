@@ -5,6 +5,7 @@ on: # rebuild any PRs and main branch changes
     branches:
       - main
       - 'releases/*'
+  workflow_dispatch:
 
 jobs:
   build: # make sure build/ci work properly
@@ -12,13 +13,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          npm install
+          yarn install
       - run: |
-          npm run all
+          yarn run all
   test: # make sure the action works on a clean machine without building
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: ./
         with:
-          milliseconds: 1000
+          token: ${{ secrets.AZDO_PAT }}
+          orgName: colinsalmcorner
+          project: Actions
+          type: User Story
+          title: Test work item from run ${{ github.run_number }}
+          description: Testing the creation of work items from Actions
