@@ -116,8 +116,9 @@ const azdev = __importStar(__nccwpck_require__(7967));
 const core = __importStar(__nccwpck_require__(2186));
 function createWorkItem(token, orgName, project, workItemInfo) {
     return __awaiter(this, void 0, void 0, function* () {
+        core.info('Try get work item client');
         const wiClient = yield getWiClient(token, orgName);
-        core.debug('Got work item client');
+        core.info('Got work item client');
         const patchDoc = [
             { op: 'add', path: '/fields/System.Title', value: workItemInfo.title },
             {
@@ -140,7 +141,7 @@ function createWorkItem(token, orgName, project, workItemInfo) {
                 value: workItemInfo.iterationPath
             });
         }
-        core.debug('Calling create work item...');
+        core.info('Calling create work item...');
         const workItem = yield wiClient.createWorkItem(null, patchDoc, workItemInfo.type, project);
         if ((workItem === null || workItem === void 0 ? void 0 : workItem.id) === undefined) {
             throw new Error('Work item was not created');
@@ -152,8 +153,10 @@ exports.createWorkItem = createWorkItem;
 function getWiClient(token, orgName) {
     return __awaiter(this, void 0, void 0, function* () {
         const orgUrl = `https://dev.azure.com/${orgName}`;
+        core.info(`Connecting to ${orgUrl}`);
         const authHandler = azdev.getPersonalAccessTokenHandler(token);
         const connection = new azdev.WebApi(orgUrl, authHandler);
+        core.info('Connection successful!');
         return connection.getWorkItemTrackingApi();
     });
 }
