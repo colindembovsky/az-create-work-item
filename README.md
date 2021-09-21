@@ -1,4 +1,4 @@
-# setup-node
+# az-create-work-item
 
 <p align="left">
   <a href="https://github.com/colindembovsky/az-create-work-item/actions/workflows/test.yml/badge.svg"><img alt="Build and Test" src="https://github.com/colindembovsky/az-create-work-item/actions/workflows/test.yml/badge.svg"></a> 
