@@ -49,13 +49,14 @@ function run() {
             const description = core.getInput('description');
             const areaPath = core.getInput('areaPath');
             const iterationPath = core.getInput('iterationPath');
-            core.debug(`orgName: ${orgName}`);
-            core.debug(`project: ${project}`);
-            core.debug(`type: ${type}`);
-            core.debug(`title: ${title}`);
-            core.debug(`description: ${description}`);
-            core.debug(`areaPath: ${areaPath}`);
-            core.debug(`iterationPath: ${iterationPath}`);
+            core.info(`orgName: ${orgName}`);
+            core.info(`project: ${project}`);
+            core.info(`type: ${type}`);
+            core.info(`title: ${title}`);
+            core.info(`description: ${description}`);
+            core.info(`areaPath: ${areaPath}`);
+            core.info(`iterationPath: ${iterationPath}`);
+            core.info('Creating new work item...');
             const newId = yield (0, work_item_functions_1.createWorkItem)(token, orgName, project, {
                 type,
                 title,
@@ -63,7 +64,7 @@ function run() {
                 areaPath,
                 iterationPath
             });
-            core.info(`Create work item [${title}] with id ${newId}`);
+            core.info(`Created work item [${title}] with id ${newId}`);
             core.setOutput('workItemId', newId);
         }
         catch (error) {

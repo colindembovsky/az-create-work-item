@@ -26,6 +26,9 @@ inputs:
   iterationPath:
     required: false
     description: 'Iteration Path for the work item e.g. /MyProject/Sprint1'
+outputs:
+  workItemId:
+    description: 'The ID of the newly created work item'
 runs:
   using: 'node12'
   main: 'dist/index.js'
