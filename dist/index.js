@@ -112,9 +112,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.createWorkItem = void 0;
 const azdev = __importStar(__nccwpck_require__(7967));
+const core = __importStar(__nccwpck_require__(2186));
 function createWorkItem(token, orgName, project, workItemInfo) {
     return __awaiter(this, void 0, void 0, function* () {
         const wiClient = yield getWiClient(token, orgName);
+        core.debug('Got work item client');
         const patchDoc = [
             { op: 'add', path: '/fields/System.Title', value: workItemInfo.title },
             {
@@ -124,7 +126,6 @@ function createWorkItem(token, orgName, project, workItemInfo) {
             }
         ];
         if (workItemInfo.areaPath !== '') {
-            ;
             patchDoc.push({
                 op: 'add',
                 path: '/fields/System.AreaPath',
@@ -132,13 +133,13 @@ function createWorkItem(token, orgName, project, workItemInfo) {
             });
         }
         if (workItemInfo.iterationPath !== '') {
-            ;
             patchDoc.push({
                 op: 'add',
                 path: '/fields/System.IterationPath',
                 value: workItemInfo.iterationPath
             });
         }
+        core.debug('Calling create work item...');
         const workItem = yield wiClient.createWorkItem(null, patchDoc, workItemInfo.type, project);
         if ((workItem === null || workItem === void 0 ? void 0 : workItem.id) === undefined) {
             throw new Error('Work item was not created');
