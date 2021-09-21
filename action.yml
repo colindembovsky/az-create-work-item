@@ -22,10 +22,10 @@ inputs:
     description: 'Value to put into the System.Description field'
   areaPath:
     required: false
-    description: 'Area Path for the work item e.g. /MyProject/MyArea'
+    description: 'Area Path for the work item e.g. "MyProject\MyArea"'
   iterationPath:
     required: false
-    description: 'Iteration Path for the work item e.g. /MyProject/Sprint1'
+    description: 'Iteration Path for the work item e.g. "MyProject\Iteration 1"'
 outputs:
   workItemId:
     description: 'The ID of the newly created work item'
