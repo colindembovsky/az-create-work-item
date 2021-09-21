@@ -1,11 +1,31 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: 'Create AzDO Work Item'
+description: 'Create a Work Item in Azure DevOps'
+author: 'colindembovsky'
 inputs:
-  milliseconds: # change this
+  token:
     required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+    description: 'Azure DevOps Token - must have WorkItem write permissions'
+  orgName:
+    required: true
+    description: 'Name of the Azure DevOps organization - e.g. colinsalmcorner for dev.azure.com/colinsalmcorner'
+  project:
+    required: true
+    description: 'Name of the team project to create the work item in'
+  type:
+    required: true
+    description: 'The work item type name - e.g. User Story'
+  title:
+    required: true
+    description: 'Title of the work item'
+  description:
+    required: true
+    description: 'Value to put into the System.Description field'
+  areaPath:
+    required: false
+    description: 'Area Path for the work item e.g. /MyProject/MyArea'
+  iterationPath:
+    required: false
+    description: 'Iteration Path for the work item e.g. /MyProject/Sprint1'
 runs:
   using: 'node12'
   main: 'dist/index.js'
