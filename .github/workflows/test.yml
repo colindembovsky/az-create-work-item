@@ -21,12 +21,12 @@ jobs:
       - name: Get PR message
         if: ${{ github.event == 'pull_request_target' }}
         run: |
-          $message="Test work item for PR ${{ github.issue.number }}"
+          message="Test work item for PR ${{ github.issue.number }}"
           echo "::set-env name=message::$message"
       - name: Get push message
         if: ${{ github.event != 'pull_request_target' }}
         run: |
-          $message="Test work item for SHA ${{ github.sha }}"
+          message="Test work item for SHA ${{ github.sha }}"
           echo "::set-env name=message::$message"
       - uses: ./
         with:
