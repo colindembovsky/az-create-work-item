@@ -18,6 +18,10 @@ jobs:
         with:
           ref: ${{github.event.pull_request.head.ref}}
           repository: ${{github.event.pull_request.head.repo.full_name}}
+      - run: |
+          yarn install
+      - run: |
+          yarn run all
       - name: Get PR message
         if: ${{ github.event == 'pull_request_target' }}
         run: |
