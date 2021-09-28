@@ -1,6 +1,6 @@
 # make sure the action works on a clean machine without building
 # PRs from me and from dependabot
-name: 'Test'
+name: 'Transpile and Test'
 
 on: 
   pull_request_target:
@@ -18,9 +18,11 @@ jobs:
         with:
           ref: ${{github.event.pull_request.head.ref}}
           repository: ${{github.event.pull_request.head.repo.full_name}}
-      - run: |
+      - name: Install dependencies
+        run: |
           yarn install
-      - run: |
+      - name: Transpile and package
+        run: |
           yarn run all
       - name: Get PR message
         if: ${{ github.event == 'pull_request_target' }}
@@ -32,7 +34,8 @@ jobs:
         run: |
           message="Test work item for SHA ${{ github.sha }}"
           echo "message=$message" >> $GITHUB_ENV
-      - uses: ./
+      - name: Test the action
+        uses: ./
         with:
           token: ${{ secrets.AZDO_TOKEN }}
           orgName: colinsalmcorner
@@ -40,3 +43,7 @@ jobs:
           type: User Story
           title: ${{ env.message }}
           description: Testing the creation of work items from Actions
+      - name: Commit transpiled filed
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Transpiling
