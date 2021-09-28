@@ -1,19 +1,25 @@
-name: 'Build'
+name: 'Release'
 on:
   push:
+    tags: v*
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - run: |
-          yarn install
-      - run: |
-          yarn run all
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          commit_message: Transpiling
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            🚀 🚀 🚀
+            ${{ github.event.pull_request.title }}
+          draft: false
+          prerelease: false
