@@ -55640,7 +55640,7 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 "use strict";
 
 
-var origSymbol = typeof Symbol !== 'undefined' && Symbol;
+var origSymbol = global.Symbol;
 var hasSymbolSham = __nccwpck_require__(7747);
 
 module.exports = function hasNativeSymbols() {
@@ -55684,7 +55684,7 @@ module.exports = function hasSymbols() {
 
 	var symVal = 42;
 	obj[sym] = symVal;
-	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax, no-unreachable-loop
+	for (sym in obj) { return false; } // eslint-disable-line no-restricted-syntax
 	if (typeof Object.keys === 'function' && Object.keys(obj).length !== 0) { return false; }
 
 	if (typeof Object.getOwnPropertyNames === 'function' && Object.getOwnPropertyNames(obj).length !== 0) { return false; }
