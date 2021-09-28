@@ -1,30 +1,38 @@
-name: 'Build and Test'
-on: # rebuild any PRs and main branch changes
-  pull_request:
-  push:
+# make sure the action works on a clean machine without building
+# PRs from me and from dependabot
+name: 'Test'
+
+on: 
+  pull_request_target:
     branches:
       - main
-      - 'releases/*'
-  workflow_dispatch:
 
 jobs:
-  build: # make sure build/ci work properly
+  test: 
+    # only execute this is the actor is dependabot or me
+    # this is because `pull_request_target` has access to secrets
+    if: ${{ github.actor == 'dependabot' || github.actor == github.repository_owner }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: |
-          yarn install
-      - run: |
-          yarn run all
-  test: # make sure the action works on a clean machine without building
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+        with:
+          ref: ${{github.event.pull_request.head.ref}}
+          repository: ${{github.event.pull_request.head.repo.full_name}}
+      - name: Get PR message
+        if: ${{ github.event == 'pull_request_target' }}
+        run: |
+          $message="Test work item for PR ${{ github.issue.number }}"
+          echo "::set-env name=message::$message"
+      - name: Get push message
+        if: ${{ github.event != 'pull_request_target' }}
+        run: |
+          $message="Test work item for SHA ${{ github.sha }}"
+          echo "::set-env name=message::$message"
       - uses: ./
         with:
           token: ${{ secrets.AZDO_TOKEN }}
           orgName: colinsalmcorner
           project: Actions
           type: User Story
-          title: Test work item from run ${{ github.run_number }}
+          title: ${{ env.message }}
           description: Testing the creation of work items from Actions
