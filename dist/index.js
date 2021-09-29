@@ -55344,7 +55344,7 @@ var ThrowTypeError = $gOPD
 	}())
 	: throwTypeError;
 
-var hasSymbols = __nccwpck_require__(587)();
+var hasSymbols = __nccwpck_require__(7039)();
 
 var getProto = Object.getPrototypeOf || function (x) { return x.__proto__; }; // eslint-disable-line no-proto
 
@@ -55634,14 +55634,14 @@ module.exports = function GetIntrinsic(name, allowMissing) {
 
 /***/ }),
 
-/***/ 587:
+/***/ 7039:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 "use strict";
 
 
 var origSymbol = global.Symbol;
-var hasSymbolSham = __nccwpck_require__(7747);
+var hasSymbolSham = __nccwpck_require__(4879);
 
 module.exports = function hasNativeSymbols() {
 	if (typeof origSymbol !== 'function') { return false; }
@@ -55655,7 +55655,7 @@ module.exports = function hasNativeSymbols() {
 
 /***/ }),
 
-/***/ 7747:
+/***/ 4879:
 /***/ ((module) => {
 
 "use strict";
