@@ -1,4 +1,4 @@
-name: 'Transpile and Test'
+name: 'PR Dump'
 
 on: 
   pull_request_target:
