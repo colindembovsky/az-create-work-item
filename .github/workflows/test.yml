@@ -11,7 +11,7 @@ jobs:
   test: 
     # only execute this is the actor is dependabot or me
     # this is because `pull_request_target` has access to secrets
-    if: ${{ github.actor == 'dependabot' || github.actor == github.repository_owner }}
+    if: ${{ github.actor == 'dependabot[bot]' || github.actor == github.repository_owner }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
           type: User Story
           title: ${{ env.message }}
           description: Testing the creation of work items from Actions
-      - name: Commit transpiled filed
+      - name: Commit transpiled file
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Transpiling
