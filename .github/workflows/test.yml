@@ -14,36 +14,53 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' || github.actor == github.repository_owner }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{github.event.pull_request.head.ref}}
-          repository: ${{github.event.pull_request.head.repo.full_name}}
-      - name: Install dependencies
-        run: |
-          yarn install
-      - name: Transpile and package
-        run: |
-          yarn run all
-      - name: Get PR message
-        if: ${{ github.event == 'pull_request_target' }}
-        run: |
-          message="Test work item for PR ${{ github.issue.number }}"
-          echo "message=$message" >> $GITHUB_ENV
-      - name: Get push message
-        if: ${{ github.event != 'pull_request_target' }}
-        run: |
-          message="Test work item for SHA ${{ github.sha }}"
-          echo "message=$message" >> $GITHUB_ENV
-      - name: Test the action
-        uses: ./
-        with:
-          token: ${{ secrets.AZDO_TOKEN }}
-          orgName: colinsalmcorner
-          project: Actions
-          type: User Story
-          title: ${{ env.message }}
-          description: Testing the creation of work items from Actions
-      - name: Commit transpiled file
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Transpiling
+    - uses: actions/checkout@v2
+      with:
+        ref: ${{github.event.pull_request.head.ref}}
+        repository: ${{github.event.pull_request.head.repo.full_name}}
+    - name: Install dependencies
+      run: |
+        yarn install
+    - name: Transpile and package
+      run: |
+        yarn run all
+    - name: Get PR message
+      if: ${{ github.event == 'pull_request_target' }}
+      run: |
+        message="Test work item for PR ${{ github.issue.number }}"
+        echo "message=$message" >> $GITHUB_ENV
+    - name: Get push message
+      if: ${{ github.event != 'pull_request_target' }}
+      run: |
+        message="Test work item for SHA ${{ github.sha }}"
+        echo "message=$message" >> $GITHUB_ENV
+    - name: Test the action
+      uses: ./
+      with:
+        token: ${{ secrets.AZDO_TOKEN }}
+        orgName: colinsalmcorner
+        project: Actions
+        type: User Story
+        title: ${{ env.message }}
+        description: Testing the creation of work items from Actions
+    - name: Commit transpiled file
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Transpiling
+   
+  # if this is a dependabot PR, then automerge
+  approve:
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Dependabot metadata
+      id: metadata
+      uses: dependabot/fetch-metadata@v1.1.1
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+    - name: Approve a PR
+      run: gh pr review --approve "$PR_URL"
+      env:
+        PR_URL: ${{github.event.pull_request.html_url}}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
