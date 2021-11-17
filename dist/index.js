@@ -1891,6 +1891,34 @@ class BuildApi extends basem.ClientApiBase {
         });
     }
     /**
+     * Gets all retention leases that apply to a specific build.
+     *
+     * @param {string} project - Project ID or project name
+     * @param {number} buildId - The ID of the build.
+     */
+    getRetentionLeasesForBuild(project, buildId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let routeValues = {
+                    project: project,
+                    buildId: buildId
+                };
+                try {
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "build", "3da19a6a-f088-45c4-83ce-2ad3a87be6c4", routeValues);
+                    let url = verData.requestUrl;
+                    let options = this.createRequestOptions('application/json', verData.apiVersion);
+                    let res;
+                    res = yield this.rest.get(url, options);
+                    let ret = this.formatResponse(res.result, BuildInterfaces.TypeInfo.RetentionLease, true);
+                    resolve(ret);
+                }
+                catch (err) {
+                    reject(err);
+                }
+            }));
+        });
+    }
+    /**
      * Deletes a build.
      *
      * @param {string} project - Project ID or project name
@@ -2761,7 +2789,7 @@ class BuildApi extends basem.ClientApiBase {
                     project: project
                 };
                 try {
-                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues);
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.2", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues);
                     let url = verData.requestUrl;
                     let options = this.createRequestOptions('application/json', verData.apiVersion);
                     let res;
@@ -2794,7 +2822,7 @@ class BuildApi extends basem.ClientApiBase {
                     ids: ids && ids.join(","),
                 };
                 try {
-                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues, queryValues);
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.2", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues, queryValues);
                     let url = verData.requestUrl;
                     let options = this.createRequestOptions('application/json', verData.apiVersion);
                     let res;
@@ -2822,7 +2850,7 @@ class BuildApi extends basem.ClientApiBase {
                     leaseId: leaseId
                 };
                 try {
-                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues);
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.2", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues);
                     let url = verData.requestUrl;
                     let options = this.createRequestOptions('application/json', verData.apiVersion);
                     let res;
@@ -2855,7 +2883,7 @@ class BuildApi extends basem.ClientApiBase {
                     leasesToFetch: leasesToFetch && leasesToFetch.join("|"),
                 };
                 try {
-                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues, queryValues);
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.2", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues, queryValues);
                     let url = verData.requestUrl;
                     let options = this.createRequestOptions('application/json', verData.apiVersion);
                     let res;
@@ -2889,7 +2917,7 @@ class BuildApi extends basem.ClientApiBase {
                     runId: runId,
                 };
                 try {
-                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues, queryValues);
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.2", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues, queryValues);
                     let url = verData.requestUrl;
                     let options = this.createRequestOptions('application/json', verData.apiVersion);
                     let res;
@@ -2926,12 +2954,41 @@ class BuildApi extends basem.ClientApiBase {
                     runId: runId,
                 };
                 try {
-                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues, queryValues);
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.2", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues, queryValues);
                     let url = verData.requestUrl;
                     let options = this.createRequestOptions('application/json', verData.apiVersion);
                     let res;
                     res = yield this.rest.get(url, options);
                     let ret = this.formatResponse(res.result, BuildInterfaces.TypeInfo.RetentionLease, true);
+                    resolve(ret);
+                }
+                catch (err) {
+                    reject(err);
+                }
+            }));
+        });
+    }
+    /**
+     * Updates the duration or pipeline protection status of a retention lease.
+     *
+     * @param {BuildInterfaces.RetentionLeaseUpdate} leaseUpdate - The new data for the retention lease.
+     * @param {string} project - Project ID or project name
+     * @param {number} leaseId - The ID of the lease to update.
+     */
+    updateRetentionLease(leaseUpdate, project, leaseId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let routeValues = {
+                    project: project,
+                    leaseId: leaseId
+                };
+                try {
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.2", "build", "272051e4-9af1-45b5-ae22-8d960a5539d4", routeValues);
+                    let url = verData.requestUrl;
+                    let options = this.createRequestOptions('application/json', verData.apiVersion);
+                    let res;
+                    res = yield this.rest.update(url, leaseUpdate, options);
+                    let ret = this.formatResponse(res.result, BuildInterfaces.TypeInfo.RetentionLease, false);
                     resolve(ret);
                 }
                 catch (err) {
@@ -7898,8 +7955,9 @@ class GalleryApi extends compatBase.GalleryCompatHttpClientBase {
      * @param {string} productVersion
      * @param {string} skus
      * @param {string} subSkus
+     * @param {string} productArchitecture
      */
-    getCategoryTree(product, categoryId, lcid, source, productVersion, skus, subSkus) {
+    getCategoryTree(product, categoryId, lcid, source, productVersion, skus, subSkus, productArchitecture) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let routeValues = {
@@ -7912,6 +7970,7 @@ class GalleryApi extends compatBase.GalleryCompatHttpClientBase {
                     productVersion: productVersion,
                     skus: skus,
                     subSkus: subSkus,
+                    productArchitecture: productArchitecture,
                 };
                 try {
                     let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "gallery", "1102bb42-82b0-4955-8d8a-435d6b4cedd3", routeValues, queryValues);
@@ -9002,6 +9061,54 @@ class GalleryApi extends compatBase.GalleryCompatHttpClientBase {
         });
     }
     /**
+     * @param {string} publisherName
+     */
+    fetchDomainToken(publisherName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let routeValues = {
+                    publisherName: publisherName
+                };
+                try {
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "gallery", "67a609ef-fa74-4b52-8664-78d76f7b3634", routeValues);
+                    let url = verData.requestUrl;
+                    let options = this.createRequestOptions('application/json', verData.apiVersion);
+                    let res;
+                    res = yield this.rest.get(url, options);
+                    let ret = this.formatResponse(res.result, null, false);
+                    resolve(ret);
+                }
+                catch (err) {
+                    reject(err);
+                }
+            }));
+        });
+    }
+    /**
+     * @param {string} publisherName
+     */
+    verifyDomainToken(publisherName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let routeValues = {
+                    publisherName: publisherName
+                };
+                try {
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "gallery", "67a609ef-fa74-4b52-8664-78d76f7b3634", routeValues);
+                    let url = verData.requestUrl;
+                    let options = this.createRequestOptions('application/json', verData.apiVersion);
+                    let res;
+                    res = yield this.rest.replace(url, null, options);
+                    let ret = this.formatResponse(res.result, null, false);
+                    resolve(ret);
+                }
+                catch (err) {
+                    reject(err);
+                }
+            }));
+        });
+    }
+    /**
      * @param {GalleryInterfaces.PublisherQuery} publisherQuery
      */
     queryPublishers(publisherQuery) {
@@ -9831,8 +9938,9 @@ class GalleryApi extends compatBase.GalleryCompatHttpClientBase {
      * @param {string} extensionName - Name of the extension
      * @param {string} version - Version of the extension
      * @param {string} statType - Type of stat to increment
+     * @param {string} targetPlatform
      */
-    incrementExtensionDailyStat(publisherName, extensionName, version, statType) {
+    incrementExtensionDailyStat(publisherName, extensionName, version, statType, targetPlatform) {
         return __awaiter(this, void 0, void 0, function* () {
             if (statType == null) {
                 throw new TypeError('statType can not be null or undefined');
@@ -9845,6 +9953,7 @@ class GalleryApi extends compatBase.GalleryCompatHttpClientBase {
                 };
                 let queryValues = {
                     statType: statType,
+                    targetPlatform: targetPlatform,
                 };
                 try {
                     let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "gallery", "4fa7adb6-ca65-4075-a232-5f28323288ea", routeValues, queryValues);
@@ -9865,8 +9974,9 @@ class GalleryApi extends compatBase.GalleryCompatHttpClientBase {
      * @param {string} publisherName
      * @param {string} extensionName
      * @param {string} version
+     * @param {string} targetPlatform
      */
-    getVerificationLog(publisherName, extensionName, version) {
+    getVerificationLog(publisherName, extensionName, version, targetPlatform) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let routeValues = {
@@ -9874,12 +9984,43 @@ class GalleryApi extends compatBase.GalleryCompatHttpClientBase {
                     extensionName: extensionName,
                     version: version
                 };
+                let queryValues = {
+                    targetPlatform: targetPlatform,
+                };
                 try {
-                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "gallery", "c5523abe-b843-437f-875b-5833064efe4d", routeValues);
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "gallery", "c5523abe-b843-437f-875b-5833064efe4d", routeValues, queryValues);
                     let url = verData.requestUrl;
                     let apiVersion = verData.apiVersion;
                     let accept = this.createAcceptHeader("application/octet-stream", apiVersion);
                     resolve((yield this.http.get(url, { "Accept": accept })).message);
+                }
+                catch (err) {
+                    reject(err);
+                }
+            }));
+        });
+    }
+    /**
+     * @param {string} itemName
+     * @param {string} version
+     * @param {GalleryInterfaces.VSCodeWebExtensionStatisicsType} statType
+     */
+    updateVSCodeWebExtensionStatistics(itemName, version, statType) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                let routeValues = {
+                    itemName: itemName,
+                    version: version,
+                    statType: statType
+                };
+                try {
+                    let verData = yield this.vsoClient.getVersioningData("6.1-preview.1", "gallery", "205c91a8-7841-4fd3-ae4f-5a745d5a8df5", routeValues);
+                    let url = verData.requestUrl;
+                    let options = this.createRequestOptions('application/json', verData.apiVersion);
+                    let res;
+                    res = yield this.rest.create(url, null, options);
+                    let ret = this.formatResponse(res.result, null, false);
+                    resolve(ret);
                 }
                 catch (err) {
                     reject(err);
@@ -33431,8 +33572,9 @@ class WorkItemTrackingApi extends basem.ClientApiBase {
      * @param {WorkItemTrackingInterfaces.QueryExpand} expand - Include the query string (wiql), clauses, query result columns, and sort options in the results.
      * @param {number} depth - In the folder of queries, return child queries and folders to this depth.
      * @param {boolean} includeDeleted - Include deleted queries and folders
+     * @param {boolean} useIsoDateFormat - DateTime query clauses will be formatted using a ISO 8601 compliant format
      */
-    getQuery(project, query, expand, depth, includeDeleted) {
+    getQuery(project, query, expand, depth, includeDeleted, useIsoDateFormat) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
                 let routeValues = {
@@ -33443,6 +33585,7 @@ class WorkItemTrackingApi extends basem.ClientApiBase {
                     '$expand': expand,
                     '$depth': depth,
                     '$includeDeleted': includeDeleted,
+                    '$useIsoDateFormat': useIsoDateFormat,
                 };
                 try {
                     let verData = yield this.vsoClient.getVersioningData("6.1-preview.2", "wit", "a67d190c-c41f-424b-814d-0e906f659301", routeValues, queryValues);
@@ -40393,6 +40536,8 @@ var WidgetScope;
     WidgetScope[WidgetScope["Project_Team"] = 1] = "Project_Team";
 })(WidgetScope = exports.WidgetScope || (exports.WidgetScope = {}));
 exports.TypeInfo = {
+    CopyDashboardOptions: {},
+    CopyDashboardResponse: {},
     Dashboard: {},
     DashboardGroup: {},
     DashboardGroupEntry: {},
@@ -40435,6 +40580,19 @@ exports.TypeInfo = {
     },
     WidgetsVersionedList: {},
     WidgetTypesResponse: {},
+};
+exports.TypeInfo.CopyDashboardOptions.fields = {
+    copyDashboardScope: {
+        enumType: exports.TypeInfo.DashboardScope
+    }
+};
+exports.TypeInfo.CopyDashboardResponse.fields = {
+    copiedDashboard: {
+        typeInfo: exports.TypeInfo.Dashboard
+    },
+    copyDashboardOptions: {
+        typeInfo: exports.TypeInfo.CopyDashboardOptions
+    }
 };
 exports.TypeInfo.Dashboard.fields = {
     dashboardScope: {
@@ -41541,6 +41699,14 @@ var ExtensionQueryFilterType;
      * Filter to get extensions shared with particular organization
      */
     ExtensionQueryFilterType[ExtensionQueryFilterType["OrganizationSharedWith"] = 21] = "OrganizationSharedWith";
+    /**
+     * Filter to get VS IDE extensions by Product Architecture
+     */
+    ExtensionQueryFilterType[ExtensionQueryFilterType["ProductArchitecture"] = 22] = "ProductArchitecture";
+    /**
+     * Filter to get VS Code extensions by target platform.
+     */
+    ExtensionQueryFilterType[ExtensionQueryFilterType["TargetPlatform"] = 23] = "TargetPlatform";
 })(ExtensionQueryFilterType = exports.ExtensionQueryFilterType || (exports.ExtensionQueryFilterType = {}));
 /**
  * Set of flags used to determine which set of information is retrieved when reading published extensions
@@ -42055,6 +42221,12 @@ var SortOrderType;
      */
     SortOrderType[SortOrderType["Descending"] = 2] = "Descending";
 })(SortOrderType = exports.SortOrderType || (exports.SortOrderType = {}));
+var VSCodeWebExtensionStatisicsType;
+(function (VSCodeWebExtensionStatisicsType) {
+    VSCodeWebExtensionStatisicsType[VSCodeWebExtensionStatisicsType["Install"] = 1] = "Install";
+    VSCodeWebExtensionStatisicsType[VSCodeWebExtensionStatisicsType["Update"] = 2] = "Update";
+    VSCodeWebExtensionStatisicsType[VSCodeWebExtensionStatisicsType["Uninstall"] = 3] = "Uninstall";
+})(VSCodeWebExtensionStatisicsType = exports.VSCodeWebExtensionStatisicsType || (exports.VSCodeWebExtensionStatisicsType = {}));
 exports.TypeInfo = {
     AcquisitionAssignmentType: {
         enumValues: {
@@ -42170,7 +42342,9 @@ exports.TypeInfo = {
             "publisherName": 18,
             "publisherDisplayName": 19,
             "includeWithPublisherFlags": 20,
-            "organizationSharedWith": 21
+            "organizationSharedWith": 21,
+            "productArchitecture": 22,
+            "targetPlatform": 23
         }
     },
     ExtensionQueryFlags: {
@@ -42389,6 +42563,13 @@ exports.TypeInfo = {
     },
     UserExtensionPolicy: {},
     UserReportedConcern: {},
+    VSCodeWebExtensionStatisicsType: {
+        enumValues: {
+            "install": 1,
+            "update": 2,
+            "uninstall": 3
+        }
+    },
 };
 exports.TypeInfo.AcquisitionOperation.fields = {
     operationState: {
@@ -48887,6 +49068,11 @@ var EnvironmentResourceType;
      */
     EnvironmentResourceType[EnvironmentResourceType["Kubernetes"] = 4] = "Kubernetes";
 })(EnvironmentResourceType = exports.EnvironmentResourceType || (exports.EnvironmentResourceType = {}));
+var ExclusiveLockType;
+(function (ExclusiveLockType) {
+    ExclusiveLockType[ExclusiveLockType["RunLatest"] = 0] = "RunLatest";
+    ExclusiveLockType[ExclusiveLockType["Sequential"] = 1] = "Sequential";
+})(ExclusiveLockType = exports.ExclusiveLockType || (exports.ExclusiveLockType = {}));
 var IssueType;
 (function (IssueType) {
     IssueType[IssueType["Error"] = 1] = "Error";
@@ -48942,6 +49128,7 @@ var ResourceLockStatus;
     ResourceLockStatus[ResourceLockStatus["TimedOut"] = 3] = "TimedOut";
     ResourceLockStatus[ResourceLockStatus["Canceled"] = 4] = "Canceled";
     ResourceLockStatus[ResourceLockStatus["Abandoned"] = 5] = "Abandoned";
+    ResourceLockStatus[ResourceLockStatus["WaitingOnChecks"] = 6] = "WaitingOnChecks";
 })(ResourceLockStatus = exports.ResourceLockStatus || (exports.ResourceLockStatus = {}));
 var SecureFileActionFilter;
 (function (SecureFileActionFilter) {
@@ -49349,6 +49536,12 @@ exports.TypeInfo = {
             "kubernetes": 4
         }
     },
+    ExclusiveLockType: {
+        enumValues: {
+            "runLatest": 0,
+            "sequential": 1
+        }
+    },
     Issue: {},
     IssueType: {
         enumValues: {
@@ -49421,7 +49614,8 @@ exports.TypeInfo = {
             "finished": 2,
             "timedOut": 3,
             "canceled": 4,
-            "abandoned": 5
+            "abandoned": 5,
+            "waitingOnChecks": 6
         }
     },
     ResourceUsage: {},
@@ -49953,6 +50147,9 @@ exports.TypeInfo.ResourceLockRequest.fields = {
     },
     finishTime: {
         isDate: true,
+    },
+    lockType: {
+        enumType: exports.TypeInfo.ExclusiveLockType
     },
     queueTime: {
         isDate: true,
